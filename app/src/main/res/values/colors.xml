@@ -1,0 +1,12 @@
+<resources>
+    <!-- Основные цвета Material 3 -->
+    <color name="colorPrimary">#6750A4</color>
+    <color name="colorPrimaryVariant">#7D67BE</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <color name="colorSecondary">#FFB900</color>
+    <color name="colorSecondaryVariant">#FFD600</color>
+    <color name="colorOnSecondary">#000000</color>
+
+    <color name="colorSurface">#FFFBFE</color>
+</resources>

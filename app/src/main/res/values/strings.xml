@@ -1,0 +1,29 @@
+<resources>
+    <!-- Common -->
+    <string name="app_name">SolanaSniperPro</string>
+    <string name="loading">Loading…</string>
+    <string name="error_network">No internet connection</string>
+
+    <!-- Wallet -->
+    <string name="connect_wallet">Connect Wallet</string>
+    <string name="disconnect">Disconnect</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Alerts</string>
+    <string name="notification_channel_description">Price alerts</string>
+
+    <!-- Dex -->
+    <string name="dex_raydium">Raydium</string>
+    <string name="dex_jupiter">Jupiter</string>
+
+    <!-- Sniper -->
+    <string name="snipe_configuration">Snipe Configuration</string>
+    <string name="token_address">Token Address</string>
+    <string name="amount_sol">Amount (SOL)</string>
+    <string name="slippage_percent">Slippage (%)</string>
+    <string name="start_snipe">Start Snipe</string>
+
+    <!-- Errors -->
+    <string name="error_invalid_address">Invalid token address</string>
+    <string name="error_min_amount">Minimum amount: 0.1 SOL</string>
+</resources>

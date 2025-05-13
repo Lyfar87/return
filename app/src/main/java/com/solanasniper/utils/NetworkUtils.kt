@@ -2,7 +2,6 @@ package com.solanasniper.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -15,11 +14,6 @@ import java.net.URL
 
 object NetworkUtils {
 
-    /**
-     * Проверяет наличие активного интернет-соединения
-     * @param context Контекст приложения
-     * @param checkWithPing Проверять ли реальную доступность через ping
-     */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     suspend fun isInternetAvailable(
         context: Context,
@@ -65,9 +59,6 @@ object NetworkUtils {
                 (!checkWithPing || pingNetwork())
     }
 
-    /**
-     * Проверяет реальную доступность интернета через ping
-     */
     private suspend fun pingNetwork(): Boolean {
         return try {
             withContext(Dispatchers.IO) {
@@ -76,30 +67,12 @@ object NetworkUtils {
                 connection.setRequestProperty("User-Agent", "NetworkUtils")
                 connection.connectTimeout = 1500
                 connection.readTimeout = 1500
-                connection.responseCode == 200
+                val result = connection.responseCode == 200
+                connection.disconnect() // Ensure connection is closed
+                result
             }
         } catch (e: IOException) {
             false
-        }
-    }
-
-    /**
-     * Проверяет подключение к Wi-Fi
-     */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    fun isConnectedToWifi(context: Context): Boolean {
-        val cm = context.getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as? ConnectivityManager ?: return false
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = cm.activeNetwork ?: return false
-            val caps = cm.getNetworkCapabilities(network)
-                ?: return false
-            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-        } else {
-            @Suppress("DEPRECATION")
-            cm.activeNetworkInfo?.type == ConnectivityManager.TYPE_WIFI
         }
     }
 }

@@ -19,41 +19,35 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object WorkerModule {
 
-    // Предоставляет WorkManager с контекстом приложения
     @Provides
     @Singleton
-    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
-        return WorkManager.getInstance(context)
-    }
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
+        WorkManager.getInstance(context)
 
-    // Предоставляет кастомную фабрику для воркеров
     @Provides
     @Singleton
     fun providePriceMonitorWorkerFactory(
-        configRepo: ConfigRepository,
-        poolRepo: PoolRepository,
-        notifier: NotificationHelper
-    ): PriceMonitorWorkerFactory {
-        return PriceMonitorWorkerFactory(configRepo, poolRepo, notifier)
-    }
+        configRepository: ConfigRepository,
+        poolRepository: PoolRepository,
+        notificationHelper: NotificationHelper
+    ): PriceMonitorWorkerFactory =
+        PriceMonitorWorkerFactory(configRepository, poolRepository, notificationHelper)
 
-    // Настраивает конфигурацию WorkManager с фабрикой
     @Provides
     @Singleton
     fun provideWorkerConfiguration(
-        factory: PriceMonitorWorkerFactory
-    ): Configuration {
-        return Configuration.Builder()
-            .setWorkerFactory(factory)
+        workerFactory: PriceMonitorWorkerFactory
+    ): Configuration =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
             .build()
-    }
 
-    // Интеграция с HiltWorkerFactory
+    // Если вы используете HiltWorkerFactory для Hilt-воркеров, раскомментируйте этот метод:
+    /*
     @Provides
     @Singleton
     fun provideHiltWorkerFactory(
-        factory: PriceMonitorWorkerFactory
-    ): HiltWorkerFactory {
-        return factory
-    }
+        hiltWorkerFactory: HiltWorkerFactory
+    ): HiltWorkerFactory = hiltWorkerFactory
+    */
 }

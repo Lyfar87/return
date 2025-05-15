@@ -68,4 +68,10 @@ class PoolRepository @Inject constructor(
             poolDao.getTrackedPools()
         }
     }
+
+    suspend fun getPoolByAddress(address: String): Pool? {
+        return withContext(Dispatchers.IO) {
+            poolDao.getPoolByAddress(address)
+        }
+    }
 }

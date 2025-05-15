@@ -1,20 +1,20 @@
 package com.solanasniper.domain.model
 
-import java.util.Date
+import java.util.*
 
 data class SnipeConfig(
     val tokenAddress: String,
     val buyPrice: Double,
-    val stopLossPercent: Double,
-    val takeProfitPercent: Double? = null,
-    val dexType: DexType = DexType.RAYDIUM,
+    val dexType: DexType,
     val amount: Double,
-    val slippage: Double = 1.0,
+    val slippage: Double,
+    val stopLossPercent: Double,
+    val takeProfitPercent: Double?,
     val isActive: Boolean = true,
     val createdAt: Date = Date(),
     val lastUpdated: Date = Date()
 ) {
-    enum class DexType { RAYDIUM, JUPITER, ORCA }
+    enum class DexType { RAYDIUM, JUPITER }
 
     init {
         require(stopLossPercent > 0) { "Stop-Loss must be positive" }

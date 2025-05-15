@@ -1,24 +1,30 @@
 package com.solanasniper.data.mapper
 
-import com.solanasniper.data.entity.SnipeConfigEntity
+import com.solanasniper.data.model.SnipeConfigEntity
 import com.solanasniper.domain.model.SnipeConfig
 
-fun SnipeConfigEntity.toDomain(): SnipeConfig = SnipeConfig(
-    id = id,
+fun SnipeConfigEntity.toDomainModel(): SnipeConfig = SnipeConfig(
     tokenAddress = tokenAddress,
     buyPrice = buyPrice,
+    dexType = SnipeConfig.DexType.valueOf(dexType),
+    amount = amount,
+    slippage = slippage,
     stopLossPercent = stopLossPercent,
-    dexType = dexType,
+    takeProfitPercent = takeProfitPercent,
     isActive = isActive,
-    createdAt = createdAt
+    createdAt = createdAt,
+    lastUpdated = updatedAt
 )
 
 fun SnipeConfig.toEntity(): SnipeConfigEntity = SnipeConfigEntity(
-    id = id,
     tokenAddress = tokenAddress,
     buyPrice = buyPrice,
+    dexType = dexType.name,
+    amount = amount,
+    slippage = slippage,
     stopLossPercent = stopLossPercent,
-    dexType = dexType,
+    takeProfitPercent = takeProfitPercent,
     isActive = isActive,
-    createdAt = createdAt
+    createdAt = createdAt,
+    updatedAt = lastUpdated
 )

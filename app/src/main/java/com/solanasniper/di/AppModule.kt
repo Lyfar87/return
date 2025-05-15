@@ -59,11 +59,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideConfigRepository(configDao: ConfigDao): ConfigRepository =
-        ConfigRepositoryImpl(configDao)
-
-    @Provides
-    @Singleton
     fun providePoolRepository(
         api: BirdeyeApi,
         database: AppDatabase

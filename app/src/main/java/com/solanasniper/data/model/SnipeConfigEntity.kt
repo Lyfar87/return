@@ -12,6 +12,7 @@ data class SnipeConfigEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val tokenAddress: String,
+    val buyPrice: Double,
     val dexType: String,
     val amount: Double,
     val slippage: Double,
@@ -20,14 +21,4 @@ data class SnipeConfigEntity(
     val isActive: Boolean = true,
     val createdAt: Date = Date(),
     val updatedAt: Date = Date()
-) {
-    fun toDomainModel() = com.solanasniper.domain.model.SnipeConfig(
-        tokenAddress = tokenAddress,
-        dexType = com.solanasniper.domain.model.DexType.valueOf(dexType),
-        amount = amount,
-        slippage = slippage,
-        stopLossPercent = stopLossPercent,
-        takeProfitPercent = takeProfitPercent,
-        isActive = isActive
-    )
-}
+)

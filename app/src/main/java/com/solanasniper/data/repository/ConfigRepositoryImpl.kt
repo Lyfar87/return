@@ -1,26 +1,30 @@
 package com.solanasniper.data.repository
 
-import com.solanasniper.data.dao.ConfigDao
-import com.solanasniper.data.mapper.toDomain
+import com.solanasniper.data.mapper.toDomainModel
 import com.solanasniper.data.mapper.toEntity
+import com.solanasniper.data.dao.ConfigDao
 import com.solanasniper.domain.model.SnipeConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ConfigRepositoryImpl(
+class ConfigRepositoryImpl @Inject constructor(
     private val configDao: ConfigDao
 ) : ConfigRepository {
-    override suspend fun getActiveConfigs(): List<SnipeConfig> {
-        return configDao.getActiveConfigs().map { it.toDomain() }
+
+    override suspend fun getActiveConfigs(): List<SnipeConfig> = withContext(Dispatchers.IO) {
+        configDao.getActiveConfigs().map { it.toDomainModel() }
     }
 
-    override suspend fun saveConfig(config: SnipeConfig) {
-        configDao.insert(config.toEntity())
+    override suspend fun saveConfig(config: SnipeConfig) = withContext(Dispatchers.IO) {
+        configDao.insertOrUpdate(config.toEntity())
     }
 
-    override suspend fun deleteConfig(id: Int) {
+    override suspend fun deleteConfig(id: Int) = withContext(Dispatchers.IO) {
         configDao.deleteById(id)
     }
 
-    override suspend fun getConfigById(id: Int): SnipeConfig? {
-        return configDao.getById(id)?.toDomain()
+    override suspend fun getConfigById(id: Int): SnipeConfig? = withContext(Dispatchers.IO) {
+        configDao.getConfigById(id)?.toDomainModel()
     }
 }
